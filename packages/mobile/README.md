@@ -1,4 +1,4 @@
-# `@navi/web`
+# `@navi/mobile`
 
 > TODO: description
 
