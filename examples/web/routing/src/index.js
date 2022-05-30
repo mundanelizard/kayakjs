@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Link, Route, Router, useParams, useRouter} from '@navey/web'
+import {Link, Route, Router, useParams, useRouter} from '@kayakjs/web'
 
 function Products() {
   return (

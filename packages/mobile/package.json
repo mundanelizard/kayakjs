@@ -9,7 +9,7 @@
   "types": "index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mundanelizard/navey/packages/mobile"
+    "url": "https://github.com/mundanelizard/kayakjs/packages/mobile"
   },
   "scripts": {
     "clean": "rimraf dist",
@@ -51,9 +51,9 @@
     ]
   },
   "bugs": {
-    "url": "https://github.com/mundanelizard/navey/issues"
+    "url": "https://github.com/mundanelizard/kayakjs/issues"
   },
-  "homepage": "https://github.com/mundanelizard/navey#readme",
+  "homepage": "https://github.com/mundanelizard/kayakjs#readme",
   "license": "ISC",
   "publishConfig": {
     "access": "public"

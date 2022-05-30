@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, StyleSheet, View, Text} from 'react-native';
-import {Navigator, Route, Routes, useNavigator} from '@navey/mobile';
+import {Navigator, Route, Routes, useNavigator} from '@kayakjs/mobile';
 
 const styles = StyleSheet.create({
   screen: {
