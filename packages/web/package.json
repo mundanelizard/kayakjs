@@ -1,8 +1,8 @@
 {
-  "name": "@navey/web",
+  "name": "@kayakjs/web",
   "description": "A light-weight react navigation library",
   "author": "Mundane Lizard <ml@mundanelizard.com> (https://mundanelizard.com)",
-  "version": "0.2.7",
+  "version": "0.1.0",
   "private": false,
   "main": "index.js",
   "module": "index.js",
