@@ -2,7 +2,7 @@
   "name": "@kayakjs/mobile",
   "description": "A light-weight react navigation library",
   "author": "Mundane Lizard <ml@mundanelizard.com> (https://mundanelizard.com)",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": false,
   "main": "index.js",
   "module": "index.js",
