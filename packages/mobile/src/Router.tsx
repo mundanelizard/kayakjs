@@ -67,7 +67,7 @@ export function Routes({children}: {children: React.ReactElement[]}) {
   );
 }
 
-const styles: any = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -75,5 +75,6 @@ const styles: any = StyleSheet.create({
   scene: {
     ...StyleSheet.absoluteFillObject,
     flex: 1,
+    zIndex: 0,
   },
 });

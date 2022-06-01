@@ -20,9 +20,10 @@ interface INavigatorContext {
   pop: () => void;
   push: (name: string, state?: any) => void;
   stack: Scene[];
-  setStack: (name: string) => void;
+  setStack: (stack: Scene[]) => void;
   animatedValue: Animated.Value;
-  setUp: (scenes: SceneConfig, stacks: Scene[]) => void;
+  setUp: (scenesConfig: Record<string, Scene>, stacks: Scene[]) => void;
+  tearDown: () => void;
   state: any;
 }
 
@@ -42,9 +43,21 @@ export function useNavigator() {
   return navigator;
 }
 
-export function Navigator({children}: {children: any}) {
+interface NavigatorProps {
+  defaultScenes?: Record<string, Scene>;
+  children: React.FC | any;
+  handleCloseNavigator?: () => void;
+}
+
+function Navigator({
+  children,
+  handleCloseNavigator,
+  defaultScenes = {},
+}: NavigatorProps) {
+  // Replace these two with a reducer.
+  const [scenes, setScenes] =
+    React.useState<Record<string, Scene>>(defaultScenes);
   const [stack, setStack] = React.useState<any>([]);
-  const [scenes, setScenes] = React.useState<{[index: string]: any}>({});
   const [state, setState] = React.useState<any[]>([]);
 
   const animatedValue = React.useRef(new Animated.Value(0));
@@ -81,6 +94,12 @@ export function Navigator({children}: {children: any}) {
     });
   }, [animatedValue, stack, state]);
 
+  const tearDown = React.useCallback(() => {
+    setStack([]);
+    setState([]);
+    setScenes(defaultScenes);
+  }, [defaultScenes]);
+
   const setUp = React.useCallback(
     (newScenes: SceneConfig, newStack: Scene[]) => {
       // returns true if the keys are not the same
@@ -98,18 +117,21 @@ export function Navigator({children}: {children: any}) {
       }
       if (!stack.length) {
         setStack(newStack);
-        setState([{}]);
       }
     },
     [stack, setStack, setScenes, scenes],
   );
 
-  React.useEffect(() => {
+  const configureBackHandler = React.useCallback(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
         if (stack.length === 1) {
-          BackHandler.exitApp;
+          if (handleCloseNavigator) {
+            handleCloseNavigator();
+          } else {
+            BackHandler.exitApp();
+          }
         } else {
           pop();
         }
@@ -117,7 +139,10 @@ export function Navigator({children}: {children: any}) {
         return true;
       },
     );
+    return () => backHandler.remove();
+  }, [handleCloseNavigator, pop, stack.length]);
 
+  const animationHandler = () => {
     if (displayPushAnimation.current) {
       displayPushAnimation.current = false;
       animatedValue.current.setValue(width);
@@ -127,25 +152,29 @@ export function Navigator({children}: {children: any}) {
         useNativeDriver: true,
       }).start();
     }
-
-    return () => {
-      backHandler.remove();
-    };
-  }, [pop, stack.length]);
-
-  const value = {
-    pop,
-    push,
-    setUp,
-    stack,
-    setStack,
-    animatedValue: animatedValue.current,
-    state: state[state.length - 1],
   };
 
+  React.useEffect(() => {
+    const backHandlerCleanUp = configureBackHandler();
+    animationHandler();
+    return () => backHandlerCleanUp();
+  }, [stack, displayPushAnimation, animatedValue, pop, configureBackHandler]);
+
   return (
-    <NavigatorContext.Provider value={value}>
+    <NavigatorContext.Provider
+      value={{
+        pop,
+        push,
+        stack,
+        setStack,
+        animatedValue: animatedValue.current,
+        setUp,
+        state,
+        tearDown,
+      }}>
       {children}
     </NavigatorContext.Provider>
   );
 }
+
+export default Navigator;

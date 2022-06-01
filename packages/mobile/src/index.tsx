@@ -1,2 +1,2 @@
-export {Navigator, useNavigator} from './Navigator';
+export {default as Navigator, useNavigator} from './Navigator';
 export {Route, Routes} from './Router';
