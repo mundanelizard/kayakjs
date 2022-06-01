@@ -169,7 +169,7 @@ function Navigator({
         setStack,
         animatedValue: animatedValue.current,
         setUp,
-        state: stack.length === 0 ? {} : state[stack.length - 1],
+        state: stack.length === 0 ? {} : state[state.length - 1],
         tearDown,
       }}>
       {children}
