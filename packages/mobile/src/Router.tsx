@@ -47,6 +47,7 @@ export function Routes({children}: {children: React.ReactElement[]}) {
         const CurrentScene: React.FC<{navigator: any}> = scene.component;
         const sceneStyles: any[] = [styles.scene];
 
+        // prevents animation from the first screen in the stack.
         if (index === stack.length - 1 && index > 0) {
           sceneStyles.push({
             transform: [

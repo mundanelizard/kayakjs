@@ -18,6 +18,7 @@ interface RouteProps {
 function Route({ children, path, component: Component, exact }: RouteProps) {
   const { location, push } = useRouter();
 
+  // matching the url params and route.
   const params = React.useMemo(() => {
     if (typeof path === "string")
       return matchRoute(path, location, exact as boolean);
@@ -44,6 +45,7 @@ function Route({ children, path, component: Component, exact }: RouteProps) {
       {Component ? (
         <Component router={router} />
       ) : (
+        // passing the router context values to only functional children
         React.Children.map(children as ReactElement, (child) => {
           if (typeof child.type !== "function") return child;
           return React.cloneElement(child, { router });

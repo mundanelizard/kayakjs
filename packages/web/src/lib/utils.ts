@@ -1,3 +1,4 @@
+// create regex to decode path into params and match path.
 function decodePath(path: string) {
   const keys: string[] = [];
 
@@ -18,6 +19,7 @@ interface StringIndexedObject {
   [index: string]: any
 }
 
+// Matches route
 export function matchRoute(path: string, location: string, exact: boolean) {
   const { regex, keys } = decodePath(path);
   const match = location.match(regex);

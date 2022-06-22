@@ -81,6 +81,7 @@ function Navigator({
   );
 
   const pop = React.useCallback(() => {
+    // handles the left slide animation
     Animated.timing(animatedValue.current, {
       toValue: width,
       duration: 250,
@@ -94,6 +95,7 @@ function Navigator({
     });
   }, [animatedValue, stack, state]);
 
+  // resets the navigator handler.
   const tearDown = React.useCallback(() => {
     setStack([]);
     setState([]);
